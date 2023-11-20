@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState } from "react";
 import css from "../styles.module.css";
 import Modal from 'react-modal';
 
@@ -15,37 +15,27 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-export class ImageGalleryItem extends Component {
-    state = {
-        isModalOpen: false
-    }
+export const ImageGalleryItem = ({ imageUrlSizeS, imageUrlSizeXL, tags}) => { 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    openModal = () => {
-    this.setState(prevState => ({
-      isModalOpen: !prevState.isModalOpen
-    }));
-
-
-  };
-  closeModal = () => {
-    this.setState({
-      isModalOpen: false
-    })
+  const openModal = () => {
+    setIsModalOpen(prevState => (
+      !prevState.isModalOpen
+    ))
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
-    render() { 
-        const { imageUrlSizeS, imageUrlSizeXL, tags } = this.props;
-        const { isModalOpen } = this.state;
-
-        return (
+  return (
             <>
-                <li className={css.imageGalleryItem} onClick={this.openModal}>
+                <li className={css.imageGalleryItem} onClick={openModal}>
                     <img className={css.imageGalleryItemPicture} src={imageUrlSizeS} alt={tags} />
                 </li>
                 <Modal
         isOpen={isModalOpen}
-        onRequestClose={this.closeModal}
+        onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Big Image">
         {/* <button onClick={this.closeModal}>close</button> */}
@@ -54,5 +44,10 @@ export class ImageGalleryItem extends Component {
                 
             </>                
         )
-    }
+
+
+
+
+
+
 }
