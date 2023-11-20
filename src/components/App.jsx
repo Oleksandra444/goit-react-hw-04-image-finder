@@ -45,7 +45,7 @@ export const App = () => {
       }
     }
     
-    if (query.trim() !== '' && page > 1 || query !== '') { 
+    if (query.trim() !== '' && (page > 1 || query !== '')) { 
     dataRequest();
   }
 
