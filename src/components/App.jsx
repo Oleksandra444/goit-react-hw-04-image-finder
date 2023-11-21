@@ -19,22 +19,23 @@ export const App = () => {
   
 
   useEffect(() => {
+
+    if (!query) return;
+    
     async function dataRequest() {
       try {
         setIsLoading(true);
         setError(false);
         const data = await api(query, page);
-        // console.log(data);
-      
-              setImages(prevImages => {  
-    
-            const uniqueIds = new Set(prevImages.map(item => item.id));
-        const newImages = data.hits.filter(item => !uniqueIds.has(item.id));
-        return [...prevImages, ...newImages];
-                });
         
-        // setImages(prevImages => [...prevImages, ...data.hits]);
-       
+        //       setImages(prevImages => {  
+    
+        //     const uniqueIds = new Set(prevImages.map(item => item.id));
+        // const newImages = data.hits.filter(item => !uniqueIds.has(item.id));
+        // return [...prevImages, ...newImages];
+        //         });
+        
+        setImages(prevImages => [...prevImages, ...data.hits]);
         setTotalHits(data.totalHits);
         
       
@@ -45,9 +46,8 @@ export const App = () => {
       }
     }
     
-    if (query.trim() !== '' && (page > 1 || query !== '')) { 
     dataRequest();
-  }
+  
 
     
     
